@@ -1,9 +1,6 @@
 ---
 addons:
-  - rabbit
   - excalidraw
-rabbit:
-  slideNum: true
 theme: default
 title: PyCMOR
 author: Pavan Siligam
