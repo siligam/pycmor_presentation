@@ -7,7 +7,7 @@
     "dev": "slidev"
   },
   "devDependencies": {
-    "@slidev/cli": "^0.50.0",
-    "@slidev/theme-default": "^0.50.0"
+    "@slidev/cli": "^52.11.3",
+    "@slidev/theme-default": "^0.25.0"
   }
 }
