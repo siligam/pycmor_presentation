@@ -30,10 +30,15 @@ jobs:
         cache: 'npm'
         
     - name: Install dependencies
-      run: npm install -g @slidev/cli @slidev/theme-default
+      run: |
+        npm install -g @slidev/cli @slidev/theme-default
+        npm install
       
     - name: Build presentation
-      run: slidev build --base /pycmor_presentation/ --out dist
+      run: |
+        slidev build --base /pycmor_presentation/ --out dist
+        slidev export --format pdf --output pycmor_presentation.pdf
+        cp pycmor_presentation.pdf dist/
       
     - name: Setup Pages
       uses: actions/configure-pages@v4

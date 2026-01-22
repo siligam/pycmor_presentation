@@ -25,6 +25,12 @@ laser: true
 
 </div>
 
+<div style="position: absolute; bottom: 40px; right: 40px;">
+
+<a href="/pycmor_presentation.pdf" download style="background: #3b82f6; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px;">📄 Download PDF</a>
+
+</div>
+
 ---
 src: ./pages/02-cmorization.md
 ---
