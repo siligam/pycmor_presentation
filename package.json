@@ -1,0 +1,13 @@
+{
+  "name": "pycmor-presentation",
+  "version": "1.0.0",
+  "description": "PyCMOR Presentation",
+  "scripts": {
+    "build": "slidev build",
+    "dev": "slidev"
+  },
+  "devDependencies": {
+    "@slidev/cli": "^0.50.0",
+    "@slidev/theme-default": "^0.50.0"
+  }
+}

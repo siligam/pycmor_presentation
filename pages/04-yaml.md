@@ -1,0 +1,113 @@
+---
+transition: slide-left
+layout: two-cols
+layoutClass: gap-x-4
+zoom: 0.9
+name: yaml
+---
+
+# yaml configuration
+
+Entry point
+
+```yaml {all}{maxHeight:'400px'}
+general:
+  name: "AWI-ESM-1-1-lr PI Control"
+  description: "CMOR configuration for AWIESM 1.1 LR"
+  maintainer: "pgierz"
+  email: "pgierz@awi.de"
+  cmor_version: "CMIP7"
+pycmor:
+  # parallel: True
+  warn_on_no_rule: False
+  use_flox: True
+  dask_cluster: "slurm"
+  dask_cluster_scaling_mode: fixed
+  fixed_jobs: 1
+  # minimum_jobs: 8
+  # maximum_jobs: 30
+  # You can add your own path to the dimensionless mapping table
+  # If nothing is specified here, it will use the built-in one.
+inherit:
+  # Common attributes shared by all rules
+  activity_id: CMIP
+  institution_id: AWI
+  source_id: AWI-CM-1-1-HR
+  variant_label: r1i1p1f1
+  experiment_id: piControl
+  grid_label: gn
+  model_component: ocnBgchem
+  output_directory: .
+  grid_file: /pool/data/AWICM/FESOM1/MESHES/core/griddes.nc
+  mesh_path: /pool/data/AWICM/FESOM1/MESHES/core
+rules:
+  - name: Dissolved Inorganic Carbon in Seawater
+    description: "dissic from REcoM, showing missing units in NetCDF"
+    inputs:
+      - path: "./model_runs/piControl_LUtrans1850/outdata/recom/"
+        pattern: bgc02_fesom_.*.nc
+    cmor_variable: dissic
+    compound_name: ocnBgchem.dissic.tavg-u-hxy-u.mon.GLB # CMIP7 compound name
+    model_variable: "bgc02"
+    model_unit: "mmol m-3"
+  - name: Seawater Alkalinity
+    description: "talk from REcoM, showing missing units in NetCDF"
+    inputs:
+      - path: "./model_runs/piControl_LUtrans1850/outdata/recom/"
+        pattern: bgc03_fesom_.*.nc
+    cmor_variable: talk
+    compound_name: ocnBgchem.talk.tavg-u-hxy-u.mon.GLB # CMIP7 compound name
+    model_variable: "bgc03"
+    model_unit: "mmol m-3"
+distributed:
+  worker:
+    memory:
+      target: 0.6 # Target 60% of worker memory usage
+      spill: 0.7 # Spill to disk when 70% of memory is used
+      pause: 0.8 # Pause workers if memory usage exceeds 80%
+      terminate: 0.95 # Terminate workers at 95% memory usage
+    resources:
+      CPU: 4 # Assign 4 CPUs per worker
+    death-timeout: 600 # Worker timeout if no heartbeat (seconds): Keep workers alive for 5 minutes
+# SLURM-specific settings for launching workers
+jobqueue:
+  slurm:
+    name: pycmor-worker
+    queue: compute # SLURM queue/partition to submit jobs
+    account: ab0246 # SLURM project/account name
+    cores: 4 # Number of cores per worker
+    memory: 128GB # Memory per worker
+    walltime: '00:30:00' # Maximum walltime per job
+    interface: ib0 # Network interface for communication
+    job-extra-directives: # Additional SLURM job options
+      - '--exclusive' # Run on exclusive nodes
+      - '--nodes=1'
+    # Worker template
+    worker-extra:
+      - "--nthreads"
+      - 4
+      - "--memory-limit"
+      - "128GB"
+      - "--lifetime"
+      - "25m"
+      - "--lifetime-stagger"
+      - "4m"
+    # How to launch workers and scheduler
+    job-cpu: 128
+    job-mem: 256GB
+    # worker-command: dask-worker
+    processes: 4 # Limited by memory per worker!
+    # scheduler-command: dask-scheduler
+```
+
+::right::
+
+| **section** | **used for** |
+|---      |---       |
+| `general` | cmor_version, CV_Dir, CMIP_Table_Dir, ... |
+| `pycmor` | application settings |
+| `inherit` | common attributes shared by all rules |
+| `rules` | **per variable settings**: cmor_variable, compound_name, model_variable, data_path, ... |
+| `pipelines` | steps to be executed for each variable (uses **Default pipeline** if not provided) |
+| `jobqueue` | SLURM specific settings for launching workers |
+
