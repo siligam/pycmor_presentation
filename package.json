@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "PyCMOR Presentation",
   "scripts": {
-    "build": "slidev build",
-    "dev": "slidev"
+    "dev": "slidev",
+    "build": "slidev build --base /pycmor_presentation/ --download"
   },
   "devDependencies": {
     "@slidev/cli": "^52.11.3",
