@@ -35,7 +35,7 @@ jobs:
         npm install
       
     - name: Build presentation
-      run: slidev build --base /pycmor_presentation/ --out dist
+      run: slidev build --base /pycmor_presentation/ --out dist --download
       
     - name: Setup Pages
       uses: actions/configure-pages@v4
