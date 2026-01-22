@@ -1,6 +1,4 @@
 ---
-addons:
-  - excalidraw
 theme: default
 title: PyCMOR
 author: Pavan Siligam
