@@ -9,5 +9,8 @@
   "devDependencies": {
     "@slidev/cli": "^52.11.3",
     "@slidev/theme-default": "^0.25.0"
+  },
+  "dependencies": {
+    "slidev-addon-excalidraw": "^1.0.4"
   }
 }
