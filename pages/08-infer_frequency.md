@@ -108,6 +108,8 @@ Status             : irregular
 
 * Frequency, regularity, gaps
 * **`strict` mode** is useful to catch subtle temporal inconsistencies
+  
+`infer_frequency` is also available as a xarray accessor `ds.pycmor.infer_frequency(...)`
 
 </div>
 
